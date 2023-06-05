@@ -1,0 +1,112 @@
+
+.ant-tabs-nav 
+{
+	margin: 0 !important;
+}
+
+.handsontable th div,
+.handsontable td {
+    /*padding: 2px;*/
+    font-size: 12px;
+}
+/*.handsontable th:last-child {
+  padding-left: 8px;
+}*/
+
+.handsontable td.contentCell {
+    padding: 2px;
+    font-size: 12px;
+}
+
+.handsontable .handsontableInput {
+    /*background: rgba(255, 255, 255, 0.5);*/
+    vertical-align: middle;
+    /*padding-top: 2px;
+  padding-left: 3px;
+  padding-right: 7px;
+  padding-top: 3px;
+  height: 24px !important;*/
+}
+
+.handsontable td.modified {
+    background-color: papayawhip;
+}
+
+.handsontable td.addrow {
+    background-color: aliceblue;
+}
+
+.handsontable td.remove {
+    background-color: rgba(109, 109, 109, 0.2);
+}
+
+.handsontable td.readonly {
+    background-color: rgba(109, 109, 109, 0.2);
+}
+
+.handsontable td.newrow {
+    background-color: whitesmoke;
+}
+
+.handsontable td.nullvalue {
+    position: relative;
+}
+
+.handsontable td.nullvalue::after {
+    content: "";
+    color: dodgerblue;
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: rgba(40, 60, 255, 0.4) transparent transparent transparent;
+}
+
+.handsontable th .relative {
+    padding-left: 0.5rem;
+}
+
+.handsontable tbody tr:nth-last-child(1) th .relative .trash_icon {
+    display: none;
+}
+
+.trash_icon:hover::before {
+    background: #ff510085;
+}
+
+.trash_icon::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 1rem;
+    width: 1rem;
+    padding-top: 0.5rem;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    background: transparent;
+    mask: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%20Tiny%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11-tiny.dtd%22%3E%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22tiny%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%20500%20500%22%20xml%3Aspace%3D%22preserve%22%3E%20%3Cpath%20d%3D%22M142.857%20205.357v160.714q0%203.906-2.511%206.417t-6.417%202.511h-17.857q-3.906%200-6.417-2.511t-2.511-6.417v-160.714q0-3.906%202.511-6.417t6.417-2.511h17.857q3.906%200%206.417%202.511t2.511%206.417zM214.286%20205.357v160.714q0%203.906-2.511%206.417t-6.417%202.511h-17.857q-3.906%200-6.417-2.511t-2.511-6.417v-160.714q0-3.906%202.511-6.417t6.417-2.511h17.857q3.906%200%206.417%202.511t2.511%206.417zM285.714%20205.357v160.714q0%203.906-2.511%206.417t-6.417%202.511h-17.857q-3.906%200-6.417-2.511t-2.511-6.417v-160.714q0-3.906%202.511-6.417t6.417-2.511h17.857q3.906%200%206.417%202.511t2.511%206.417zM321.429%20407.366v-264.509h-250v264.509q0%206.138%201.953%2011.3t4.046%207.534%202.93%202.372h232.143q0.837%200%202.93-2.372t4.046-7.534%201.953-11.3zM133.929%20107.143h125l-13.393-32.645q-1.953-2.511-4.743-3.069h-88.449q-2.79%200.558-4.743%203.069zM392.857%20116.071v17.857q0%203.906-2.511%206.417t-6.417%202.511h-26.786v264.509q0%2023.159-13.114%2040.039t-31.529%2016.88h-232.143q-18.415%200-31.529-16.323t-13.114-39.481v-265.625h-26.786q-3.906%200-6.417-2.511t-2.511-6.417v-17.857q0-3.906%202.511-6.417t6.417-2.511h86.216l19.531-46.596q4.185-10.324%2015.067-17.578t22.042-7.254h89.286q11.161%200%2022.042%207.254t15.067%2017.578l19.531%2046.596h86.216q3.906%200%206.417%202.511t2.511%206.417z%22%20fill%3D%22%23ffffff%22%20%2F%3E%3C%2Fsvg%3E') no-repeat left center / contain;
+    -webkit-mask: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%20Tiny%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11-tiny.dtd%22%3E%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22tiny%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%20500%20500%22%20xml%3Aspace%3D%22preserve%22%3E%20%3Cpath%20d%3D%22M142.857%20205.357v160.714q0%203.906-2.511%206.417t-6.417%202.511h-17.857q-3.906%200-6.417-2.511t-2.511-6.417v-160.714q0-3.906%202.511-6.417t6.417-2.511h17.857q3.906%200%206.417%202.511t2.511%206.417zM214.286%20205.357v160.714q0%203.906-2.511%206.417t-6.417%202.511h-17.857q-3.906%200-6.417-2.511t-2.511-6.417v-160.714q0-3.906%202.511-6.417t6.417-2.511h17.857q3.906%200%206.417%202.511t2.511%206.417zM285.714%20205.357v160.714q0%203.906-2.511%206.417t-6.417%202.511h-17.857q-3.906%200-6.417-2.511t-2.511-6.417v-160.714q0-3.906%202.511-6.417t6.417-2.511h17.857q3.906%200%206.417%202.511t2.511%206.417zM321.429%20407.366v-264.509h-250v264.509q0%206.138%201.953%2011.3t4.046%207.534%202.93%202.372h232.143q0.837%200%202.93-2.372t4.046-7.534%201.953-11.3zM133.929%20107.143h125l-13.393-32.645q-1.953-2.511-4.743-3.069h-88.449q-2.79%200.558-4.743%203.069zM392.857%20116.071v17.857q0%203.906-2.511%206.417t-6.417%202.511h-26.786v264.509q0%2023.159-13.114%2040.039t-31.529%2016.88h-232.143q-18.415%200-31.529-16.323t-13.114-39.481v-265.625h-26.786q-3.906%200-6.417-2.511t-2.511-6.417v-17.857q0-3.906%202.511-6.417t6.417-2.511h86.216l19.531-46.596q4.185-10.324%2015.067-17.578t22.042-7.254h89.286q11.161%200%2022.042%207.254t15.067%2017.578l19.531%2046.596h86.216q3.906%200%206.417%202.511t2.511%206.417z%22%20fill%3D%22%23ffffff%22%20%2F%3E%3C%2Fsvg%3E') no-repeat left center / contain;
+}
+
+.trash_on::before {
+    background: #ff5100 !important;
+}
+
+.handsontable th span.hasError::after {
+    content: "";
+    position: absolute;
+    left: -4px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: rgba(255, 60, 40, 0.4) transparent transparent transparent;
+}
+
+.isDisable {
+    opacity: 0.7; /*透明度を下げる*/
+    pointer-events: none; /*クリック無効にする*/
+}
