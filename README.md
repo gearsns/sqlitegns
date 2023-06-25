@@ -10,8 +10,8 @@ Sqlitegns is a tool for full client-side manipulation of SQLite databases.
 
 - Edit database tables in an EXCEL-like editor.
 
-![](edit.png
-)
+![](image/edit.png)
+
 - Export result sets to EXCEL files.
 
 ![](image/export_excel.png)
