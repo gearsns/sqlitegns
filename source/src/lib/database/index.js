@@ -1,6 +1,7 @@
 import initSqlJs from "sql.js"
 // Required to let webpack 4 know it needs to copy the wasm file to our assets
 import sqlWasm from "!!file-loader?name=sql-wasm-[contenthash].wasm!sql.js/dist/sql-wasm.wasm"
+import { render } from "@testing-library/react"
 
 const arrayToHash = (header, data) => {
 	let item = {}
@@ -14,6 +15,7 @@ const arrayToHash = (header, data) => {
 export default class Database {
 	constructor() {
 		this.db = null
+		this.file = null
 		this.fileHandle = null
 		this.table_info = []
 	}
@@ -22,6 +24,7 @@ export default class Database {
 		const SQL = await initSqlJs({ locateFile: () => sqlWasm })
 		this.db = new SQL.Database()
 		this.table_info = []
+		this.file = null
 		this.fileHandle = null
 		return this.db
 	}
@@ -63,39 +66,72 @@ export default class Database {
 	}
 	async open(filehandle) {
 		this.close()
-		if (filehandle) {
-			this.fileHandle = filehandle
-			// すでにユーザーの許可が得られているかをチェック
-			let permission = await filehandle.queryPermission({ mode: 'readwrite' })
-			if (permission !== 'granted') {
-				// ユーザーの許可が得られていないなら、許可を得る（ダイアログを出す）
-				permission = await filehandle.requestPermission({ mode: 'readwrite' })
+		let arrayBuffer = null
+		if (window.showOpenFilePicker) {
+			if (filehandle) {
+				this.fileHandle = filehandle
+				// すでにユーザーの許可が得られているかをチェック
+				let permission = await filehandle.queryPermission({ mode: 'readwrite' })
 				if (permission !== 'granted') {
-					throw new Error('Please allow the storage access permission request.')
+					// ユーザーの許可が得られていないなら、許可を得る（ダイアログを出す）
+					permission = await filehandle.requestPermission({ mode: 'readwrite' })
+					if (permission !== 'granted') {
+						throw new Error('Please allow the storage access permission request.')
+					}
 				}
+			} else {
+				[this.fileHandle] = await window.showOpenFilePicker()
 			}
+			this.file = await this.fileHandle.getFile()
+			arrayBuffer = await this.file.arrayBuffer()
 		} else {
-			[this.fileHandle] = await window.showOpenFilePicker()
+			this.file = await new Promise(resolve => {
+				const input = document.createElement('input')
+				input.type = 'file'
+				input.onchange = e => {
+					resolve(e.target.files[0])
+				}
+				input.click()
+			})
+			arrayBuffer = await new Promise(resolve => {
+				const reader = new FileReader()
+				reader.readAsArrayBuffer(this.file)
+				reader.onload = _ => {
+					resolve(reader.result)
+				}
+			})
 		}
-		const file = await this.fileHandle.getFile()
-		const arrayBuffer = await file.arrayBuffer()
 		const SQL = await initSqlJs({ locateFile: () => sqlWasm })
 		this.db = new SQL.Database(new Uint8Array(arrayBuffer))
 		this.refresh()
 	}
 	async save() {
-		if (!this.fileHandle) {
-			this.saveAs()
-			return
-		}
-		const checked = await this.fileHandle.requestPermission({
-			mode: "readwrite"
-		});
-		if (checked === "granted") {
-			const writer = await this.fileHandle.createWritable()
-			await writer.truncate(0)
-			await writer.write(this.db.export())
-			await writer.close()
+		if (window.showSaveFilePicker) {
+			if (!this.fileHandle) {
+				this.saveAs()
+				return
+			}
+			const checked = await this.fileHandle.requestPermission({
+				mode: "readwrite"
+			});
+			if (checked === "granted") {
+				const writer = await this.fileHandle.createWritable()
+				await writer.truncate(0)
+				await writer.write(this.db.export())
+				await writer.close()
+			}
+		} else {
+			const a = document.createElement('a')
+			a.href = URL.createObjectURL(new Blob([this.db.export().buffer], { type: "application/octet-binary" }))
+			if (this.file) {
+				a.download = this.file.name
+			} else {
+				a.download = 'sqlite.db'
+			}
+			a.style.display = 'none'
+			document.body.appendChild(a)
+			a.click()
+			document.body.removeChild(a)
 		}
 	}
 	async saveAs() {

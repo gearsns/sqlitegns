@@ -69,7 +69,7 @@ const Schema = props => {
       }
       await database.open(storeFileHandle)
       const fileHandle = database.fileHandle
-      {
+      if (fileHandle) {
         await sqlitegns_db.table("sqlitegns-filehandles-store").put({
           name: fileHandle.name,
           handle: fileHandle
@@ -96,13 +96,32 @@ const Schema = props => {
         await sqlitegns_state_db.table("ItemTable").put(itemtable)
       }
       storeDispatch({ type: "Set", store: { database: database, fileHandle: fileHandle } })
-      message.success(`${fileHandle.name} file opened successfully`)
+      message.success(`${database.file.name} file opened successfully`)
     } catch (err) {
       message.error(`file opened failed. ${err}`)
     }
   }
 
-  const getRecentlyOpened = () => {
+  const getFileMenuItems = recently_items => {
+    let file_items = []
+    file_items.push(getItem("New", 'new', <DatabaseOutlined />))
+    file_items.push(getItem("Open", 'open', <DatabaseOutlined />))
+    if (window.showSaveFilePicker) {
+      if (recently_items && recently_items.length > 0) {
+        file_items.push(getItem("Recent", 'recent', <MenuOutlined />, recently_items))
+      } else {
+        file_items.push(getItem("Recent", 'recent', <MenuOutlined />, [getItem("None", 'none')]))
+      }
+    }
+    file_items.push(getItem("Save", 'save', <SaveOutlined />))
+    if (window.showSaveFilePicker) {
+      file_items.push(getItem("SaveAs", 'saveas', <ExportOutlined />))
+    }
+    return [
+      getItem('File', 'file_menu', <MenuOutlined />, file_items)
+    ]
+  }
+  const getRecentlyOpened = _ => {
     let itemtable = null
     let recently_items = [
       getItem("None", 'none')
@@ -122,27 +141,11 @@ const Schema = props => {
           )
         }
       }
-      setFileItems([
-        getItem('File', 'file_menu', <MenuOutlined />, [
-          getItem("New", 'new', <DatabaseOutlined />),
-          getItem("Open", 'open', <DatabaseOutlined />),
-          getItem("Recent", 'recent', <MenuOutlined />, recently_items),
-          getItem("Save", 'save', <SaveOutlined />),
-          getItem('SaveAs', 'saveas', <ExportOutlined />),
-        ])
-      ])
+      setFileItems(getFileMenuItems(recently_items))
     })
   }
   getRecentlyOpened()
-  const [fileItems, setFileItems] = useState([
-    getItem('File', 'file_menu', <MenuOutlined />, [
-      getItem("New", 'new', <DatabaseOutlined />),
-      getItem("Open", 'open', <DatabaseOutlined />),
-      getItem("Recent", 'recent', <MenuOutlined />, [getItem("None", 'none')]),
-      getItem("Save", 'save', <SaveOutlined />),
-      getItem('SaveAs', 'saveas', <ExportOutlined />),
-    ])
-  ])
+  const [fileItems, setFileItems] = useState(getFileMenuItems(null))
 
   const saveDB = async _ => {
     try {

@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, createContext, useLayoutEffect, useReducer } from "react";
-import Splitter from 'm-react-splitters';
-import './Home.css';
-import Schema from './Schema';
-import QueryArea from './Query';
-import { StoreProvider } from '../../store';
-import { Layout } from 'antd';
+import React, { useEffect, useRef, createContext, useLayoutEffect, useReducer } from "react"
+import Splitter from 'm-react-splitters'
+import './Home.css'
+import Schema from './Schema'
+import QueryArea from './Query'
+import { StoreProvider } from '../../store'
+import { Layout } from 'antd'
 import logoimage from "../../assets/images/logo.png"
 
-const { Header, Content } = Layout;
+const { Header, Content } = Layout
 
 export const UserContext = createContext()
 
@@ -66,4 +66,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Home
