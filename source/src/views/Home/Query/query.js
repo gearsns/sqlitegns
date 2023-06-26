@@ -66,12 +66,23 @@ const Query = ({ fn_ref }) => {
 			const sheet = workbook.addWorksheet("SQL")
 			sheet.addRows([hot.getColHeader()])
 			sheet.addRows(hot.getData())
-			const handle = await window.showSaveFilePicker()
-			const writer = await handle.createWritable()
-			await writer.truncate(0)
-			await writer.write(await workbook.xlsx.writeBuffer())
-			await writer.close()
-			message.success(`Exported to ${handle.name}`)
+			if (window.showOpenFilePicker) {
+				const handle = await window.showSaveFilePicker()
+				const writer = await handle.createWritable()
+				await writer.truncate(0)
+				await writer.write(await workbook.xlsx.writeBuffer())
+				await writer.close()
+				message.success(`Exported to ${handle.name}`)
+			} else {
+				const a = document.createElement('a')
+				a.href = URL.createObjectURL(new Blob([await workbook.xlsx.writeBuffer().buffer], { type: "application/octet-binary" }))
+				a.download = 'sqlite.xlsx'
+				a.style.display = 'none'
+				document.body.appendChild(a)
+				a.click()
+				document.body.removeChild(a)
+				message.success(`Exported to sqlite.xlsx`)
+			}
 		} catch (err) {
 			message.error(`Error: ${err}`)
 		}

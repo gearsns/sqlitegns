@@ -50,7 +50,7 @@ export default class Database {
 					}
 					// AUTOINCREMENTかどうかを確認
 					if (int_pk_num == 1) {
-						for (const fret of this.db.exec(`SELECT 1 AS isAutoincrement FROM sqlite_master WHERE tbl_name='${tname}' AND sql LIKE "% AUTOINCREMENT%"`)) {
+						for (const fret of this.db.exec(`SELECT 1 AS isAutoincrement FROM sqlite_master WHERE tbl_name='${tname}' AND sql LIKE '% AUTOINCREMENT%'`)) {
 							for (let field of fields_info) {
 								if (field['pk'] == 1) {
 									field['isAutoincrement'] = true
@@ -80,7 +80,14 @@ export default class Database {
 					}
 				}
 			} else {
-				[this.fileHandle] = await window.showOpenFilePicker()
+				[this.fileHandle] = await window.showOpenFilePicker({
+					types: [
+						{
+							description: "Sqlite file",
+							accept: { "application/octet-binary": [".db", ".sqlte"] }
+						}
+					],
+				})
 			}
 			this.file = await this.fileHandle.getFile()
 			arrayBuffer = await this.file.arrayBuffer()
@@ -135,7 +142,14 @@ export default class Database {
 		}
 	}
 	async saveAs() {
-		this.fileHandle = await window.showSaveFilePicker()
+		this.fileHandle = await window.showSaveFilePicker({
+			types: [
+				{
+					description: "Sqlite file",
+					accept: { "application/octet-binary": [".db"] }
+				}
+			]
+		})
 		const writer = await this.fileHandle.createWritable()
 		await writer.truncate(0)
 		await writer.write(this.db.export())
