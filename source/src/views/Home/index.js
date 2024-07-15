@@ -54,7 +54,8 @@ const Home = () => {
                 "textAlign": "left",
                 "width": "100%",
                 "height": "100%",
-                "display": "block"
+                "display": "block",
+                position: "relative"
               }}>
                 <QueryArea ref={queryRef} />
               </div>
