@@ -6,6 +6,7 @@ import QueryArea from './Query'
 import { StoreProvider } from '../../store'
 import { Layout } from 'antd'
 import logoimage from "../../assets/images/logo.png"
+import { GithubOutlined } from '@ant-design/icons'
 
 const { Header, Content } = Layout
 
@@ -37,6 +38,7 @@ const Home = () => {
         }}
       >
         <img src={logoimage} /> <h1 style={{ marginLeft: '10px' }}>sqlitegns</h1>
+        <span className="source_link"><a href="https://github.com/gearsns/sqlitegns"><GithubOutlined /></a></span>
       </Header>
       <Content className="site-layout" style={{ padding: '0', overflow: 'hidden' }}>
         <div className="app" style={{ height: "calc(100% - 40px)", position: "absolute" }}>

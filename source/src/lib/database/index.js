@@ -197,7 +197,7 @@ export default class Database {
 								return "''"
 							}
 						}
-						return `'${value.replace(/'/, "''")}'`
+						return `'${value.replace(/'/g, "''")}'`
 					default:
 						if (value === null || value === undefined) {
 							if (nullable) {
@@ -206,7 +206,7 @@ export default class Database {
 								return "''"
 							}
 						}
-						return `'${value.replace(/'/, "''")}'`
+						return `'${value.replace(/'/g, "''")}'`
 				}
 			}
 			const create_insert_sql = (item) => {
